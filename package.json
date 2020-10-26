@@ -1,5 +1,5 @@
 {
-  "name": "node-statvfs",
+  "name": "@wwa/statvfs",
   "version": "1.0.0",
   "description": "Provides a wrapper around uv_fs_statfs() function",
   "main": "index.js",
@@ -36,5 +36,8 @@
   "bugs": {
     "url": "https://github.com/sjinks/node-statvfs/issues"
   },
-  "homepage": "https://github.com/sjinks/node-statvfs#readme"
+  "homepage": "https://github.com/sjinks/node-statvfs#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
