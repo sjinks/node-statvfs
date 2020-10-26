@@ -1,4 +1,4 @@
-#define NAPI_VERSION 6
+#define NAPI_VERSION 2
 #include <string>
 #include <memory>
 #include <uv.h>
@@ -47,28 +47,24 @@ static void statvfs_callback(uv_fs_t* req)
     data->deferred.Resolve(obj);
 }
 
-class StatVFSAddon: public Napi::Addon<StatVFSAddon> {
-public:
-    StatVFSAddon(Napi::Env env, Napi::Object exports)
-    {
-        DefineAddon(exports, {
-            InstanceMethod("statvfs", &StatVFSAddon::statVFS)
-        });
-    }
-private:
-    Napi::Value statVFS(const Napi::CallbackInfo& info)
-    {
-        const Napi::String path = info[0].ToString();
-        const std::string spath = path;
+static Napi::Value statVFS(const Napi::CallbackInfo& info)
+{
+    const Napi::String path = info[0].ToString();
+    const std::string spath = path;
 
-        uv_loop_s* event_loop;
-        napi_get_uv_event_loop(info.Env(), &event_loop);
+    uv_loop_s* event_loop;
+    napi_get_uv_event_loop(info.Env(), &event_loop);
 
-        CallbackData* data = new CallbackData(info.Env());
-        data->request.data = data;
-        uv_fs_statfs(event_loop, &data->request, spath.c_str(), statvfs_callback);
-        return data->deferred.Promise();
-    }
-};
+    CallbackData* data = new CallbackData(info.Env());
+    data->request.data = data;
+    uv_fs_statfs(event_loop, &data->request, spath.c_str(), statvfs_callback);
+    return data->deferred.Promise();
+}
 
-NODE_API_ADDON(StatVFSAddon)
+static Napi::Object Init(Napi::Env env, Napi::Object exports)
+{
+    exports.Set("statvfs", Napi::Function::New(env, statVFS));
+    return exports;
+}
+
+NODE_API_MODULE(statvfs, Init)
