@@ -1,4 +1,3 @@
-#define NAPI_VERSION 2
 #include <string>
 #include <memory>
 #include <uv.h>

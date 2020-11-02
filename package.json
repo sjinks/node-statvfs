@@ -4,7 +4,7 @@
   "description": "Provides a wrapper around uv_fs_statfs() function",
   "main": "index.js",
   "scripts": {
-    "install": "node-gyp rebuild",
+    "install": "prebuild-install --runtime napi || node-gyp rebuild",
     "build": "node-gyp rebuild",
     "build:dev": "node-gyp rebuild --debug",
     "test": "mocha"
@@ -21,12 +21,14 @@
   "license": "MIT",
   "devDependencies": {
     "mocha": "^8.2.0",
-    "node-gyp": "^7.1.2",
+    "prebuild": "^10.0.1",
     "should": "^13.2.3"
   },
   "dependencies": {
     "bindings": "^1.5.0",
-    "node-addon-api": "^3.0.2"
+    "node-addon-api": "^3.0.2",
+    "node-gyp": "^7.1.2",
+    "prebuild-install": "^6.0.0"
   },
   "gypfile": true,
   "repository": {
@@ -39,5 +41,10 @@
   "homepage": "https://github.com/sjinks/node-statvfs#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "binary": {
+    "napi_versions": [
+      2
+    ]
   }
 }
