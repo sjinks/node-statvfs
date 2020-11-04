@@ -4,7 +4,7 @@
   "description": "Provides a wrapper around uv_fs_statfs() function",
   "main": "index.js",
   "scripts": {
-    "install": "prebuild-install --runtime napi || node-gyp rebuild",
+    "install": "prebuild-install --runtime napi --tag-prefix '' || node-gyp rebuild",
     "build": "node-gyp rebuild",
     "build:dev": "node-gyp rebuild --debug",
     "test": "mocha"
@@ -20,7 +20,7 @@
   "author": "Volodymyr Kolesnykov <volodymyr@wildwolf.name> (https://wildwolf.name/)",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^8.2.0",
+    "mocha": "^8.2.1",
     "prebuild": "^10.0.1",
     "should": "^13.2.3"
   },
