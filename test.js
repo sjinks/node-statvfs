@@ -42,3 +42,26 @@ describe('statvfs', () => {
             });
     });
 });
+
+describe('statvfsSync', () => {
+    it('should succeed for existing paths', () => {
+        const res = addon.statvfsSync('/')
+        res.should.be.an.Object();
+        res.should.have.properties('type', 'bsize', 'blocks', 'bfree', 'bavail', 'files', 'ffree');
+        res.bavail.should.be.lessThanOrEqual(res.bfree);
+        res.bfree.should.be.lessThanOrEqual(res.blocks);
+        res.bsize.should.be.greaterThanOrEqual(0);
+        res.ffree.should.be.lessThanOrEqual(res.files);
+    });
+
+    it('should accept Buffers', () => {
+        const res = addon.statvfsSync(Buffer.from('/'))
+        res.should.be.an.Object();
+        res.should.have.properties('type', 'bsize', 'blocks', 'bfree', 'bavail', 'files', 'ffree');
+    });
+
+    it('should fail for non-existing paths', () => {
+        const path = __filename + '/';
+        (() => addon.statvfsSync(path)).should.throw(Error);
+    });
+});

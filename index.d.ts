@@ -9,3 +9,4 @@ export interface VFSStats {
 }
 
 export function statvfs(path: string | Buffer): Promise<VFSStats>;
+export function statvfsSync(path: string | Buffer): VFSStats;
