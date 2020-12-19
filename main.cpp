@@ -1,3 +1,4 @@
+#include <cassert>
 #include <string>
 #include <memory>
 #include <cerrno>
@@ -22,7 +23,6 @@ struct CallbackData {
 static void statvfs_callback(uv_fs_t* req)
 {
     std::unique_ptr<CallbackData> data(static_cast<CallbackData*>(req->data));
-    std::unique_ptr<uv_fs_t, decltype(&uv_fs_req_cleanup)> request(req, uv_fs_req_cleanup);
     const Napi::Env env = data->deferred.Env();
     Napi::HandleScope scope(env);
 
