@@ -60,11 +60,19 @@ static Napi::Value statVFS(const Napi::CallbackInfo& info)
     }
 
     CallbackData* data = new CallbackData(env);
-    data->request.data = data;;
+    data->request.data = data;
     int res = uv_fs_statfs(event_loop, &data->request, spath.c_str(), statvfs_callback);
     if (res < 0) {
         throw Napi::Error::New(env, uv_err_name(res));
     }
+
+    uv_idle_t* idle = new uv_idle_t;
+    uv_idle_init(event_loop, idle);
+    uv_idle_start(idle, [](uv_idle_t* idle) {
+        uv_close(reinterpret_cast<uv_handle_t*>(idle), [](uv_handle_t* handle) {
+            delete reinterpret_cast<uv_check_t*>(handle);
+        });
+    });
 
     return data->deferred.Promise();
 }
