@@ -22,8 +22,12 @@ struct CallbackData {
 static void statvfs_callback(uv_fs_t* req)
 {
     std::unique_ptr<CallbackData> data(static_cast<CallbackData*>(req->data));
+    std::unique_ptr<uv_fs_t, decltype(&uv_fs_req_cleanup)> request(req, uv_fs_req_cleanup);
     const Napi::Env env = data->deferred.Env();
     Napi::HandleScope scope(env);
+
+    Napi::AsyncContext ctx(env, "statvfs");
+    Napi::CallbackScope cbscope(env, ctx);
 
     if (req->result < 0) {
         napi_value error;
@@ -65,14 +69,6 @@ static Napi::Value statVFS(const Napi::CallbackInfo& info)
     if (res < 0) {
         throw Napi::Error::New(env, uv_err_name(res));
     }
-
-    uv_idle_t* idle = new uv_idle_t;
-    uv_idle_init(event_loop, idle);
-    uv_idle_start(idle, [](uv_idle_t* idle) {
-        uv_close(reinterpret_cast<uv_handle_t*>(idle), [](uv_handle_t* handle) {
-            delete reinterpret_cast<uv_check_t*>(handle);
-        });
-    });
 
     return data->deferred.Promise();
 }
