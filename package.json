@@ -44,7 +44,7 @@
   },
   "binary": {
     "napi_versions": [
-      2
+      3
     ]
   }
 }
