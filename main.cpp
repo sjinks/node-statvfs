@@ -50,15 +50,22 @@ static void statvfs_callback(uv_fs_t* req)
 
 static Napi::Value statVFS(const Napi::CallbackInfo& info)
 {
+    Napi::Env env = info.Env();
     const Napi::String path = info[0].ToString();
     const std::string spath = path;
 
     uv_loop_s* event_loop;
-    napi_get_uv_event_loop(info.Env(), &event_loop);
+    if (napi_get_uv_event_loop(env, &event_loop) != napi_ok) {
+        throw Napi::Error::New(env);
+    }
 
-    CallbackData* data = new CallbackData(info.Env());
-    data->request.data = data;
-    uv_fs_statfs(event_loop, &data->request, spath.c_str(), statvfs_callback);
+    CallbackData* data = new CallbackData(env);
+    data->request.data = data;;
+    int res = uv_fs_statfs(event_loop, &data->request, spath.c_str(), statvfs_callback);
+    if (res < 0) {
+        throw Napi::Error::New(env, uv_err_name(res));
+    }
+
     return data->deferred.Promise();
 }
 
