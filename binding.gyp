@@ -9,10 +9,12 @@
         "-fno-exceptions"
       ],
       "cflags_cc!": [
-        "-fno-exceptions"
+        "-fno-exceptions",
+        "-std=gnu++14"
       ],
       "cflags+": [
-        "-fvisibility=hidden"
+        "-fvisibility=hidden",
+        "-std=gnu++11"
       ],
       "include_dirs": [
         "<!(node -p \"require('node-addon-api').include_dir\")"
