@@ -1,6 +1,6 @@
 # node-statvfs
 
-Wrapper around uv_fs_statfs() function
+This module provides Node.js bindings for the [`uv_fs_statfs()`](http://docs.libuv.org/en/v1.x/fs.html#c.uv_fs_statfs) function.
 
 # Example
 
