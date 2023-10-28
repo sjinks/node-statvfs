@@ -1,6 +1,6 @@
 {
   "name": "@wwa/statvfs",
-  "version": "1.1.17",
+  "version": "1.1.18",
   "description": "Provides a wrapper around uv_fs_statfs() function",
   "main": "index.js",
   "scripts": {
