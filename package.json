@@ -22,7 +22,7 @@
   "devDependencies": {
     "mocha": "^10.2.0",
     "node-gyp": "^10.0.0",
-    "prebuild": "^12.1.0",
+    "prebuild": "^13.0.0",
     "should": "^13.2.3"
   },
   "dependencies": {
@@ -35,7 +35,7 @@
       "node-gyp": "$node-gyp"
     },
     "node-gyp": {
-      "prebuild": "^7.5.2"
+      "prebuild": "^13.0.0"
     }
   },
   "gypfile": true,
