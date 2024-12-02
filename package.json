@@ -20,7 +20,7 @@
   "author": "Volodymyr Kolesnykov <volodymyr@wildwolf.name> (https://wildwolf.name/)",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^10.2.0",
+    "mocha": "^11.0.0",
     "node-gyp": "^10.0.0",
     "prebuild": "^13.0.0",
     "should": "^13.2.3"
